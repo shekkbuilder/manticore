@@ -14,6 +14,8 @@ But there are difference between format that makes it difficult to find a siple 
 interpreters? linkers? linked dlls?
 
 '''
+from StringIO import StringIO
+
 
 class Binary(object):
     magics = { }
@@ -43,7 +45,15 @@ from elftools.elf.elffile import ELFFile
 class CGCElf(Binary):
     def __init__(self, filename):
         super(CGCElf, self).__init__(filename)
-        self.elf = ELFFile(file(filename)) 
+
+        with open(filename) as f:
+            patched_cgc = bytearray(f.read())
+            patched_cgc[1:4] = 'ELF'
+
+        cgc_stream = StringIO(patched_cgc)
+        cgc_stream.name = filename
+
+        self.elf = ELFFile(cgc_stream)
         self.arch = {'x86':'i386','x64':'amd64'}[self.elf.get_machine_arch()]
 
         assert 'i386' == self.arch
