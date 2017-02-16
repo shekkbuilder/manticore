@@ -97,6 +97,8 @@ class IntegrationTest(unittest.TestCase):
         for k,v in params.iteritems():
             if k.startswith("--"):
                 args.extend([k, v.format(dumpdir=dumpdir, workspace=workspace)])
+        print ' '.join(args)
+        assert 0
         self._runWithTimeout(args)
 
         efile = os.path.join(dumpdir, params['expected'])
