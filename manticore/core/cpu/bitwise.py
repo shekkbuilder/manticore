@@ -83,7 +83,8 @@ def LSL_C(value, amount, width):
     # assert amount <= width
     assert amount > 0
     result = GetNBits(value << amount, width)
-    carry = Bit(value, width - amount)
+    # carry = Bit(value, width - amount)
+    carry = Bit(value, width)
     return (result, carry)
 
 def LSL(value, amount, width):
