@@ -856,3 +856,9 @@ class Armv7Cpu(Cpu):
         '''
         pass
 
+    @instruction
+    def LDCL(cpu, *operands):
+        '''
+        Occasionally used in glibc. Nop under our execution model.
+        '''
+        pass
